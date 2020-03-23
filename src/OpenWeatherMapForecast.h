@@ -72,6 +72,8 @@ typedef struct OpenWeatherMapForecastData {
 
 class OpenWeatherMapForecast: public JsonListener {
   private:
+    const String host = "api.openweathermap.org";
+    const uint8_t port = 80;
     String currentKey;
     String currentParent;
     OpenWeatherMapForecastData *data;
@@ -80,12 +82,12 @@ class OpenWeatherMapForecast: public JsonListener {
     uint8_t currentForecast;
     boolean metric = true;
     String language = "en";
-    uint8_t *allowedHours;
+    const uint8_t *allowedHours;
     uint8_t allowedHoursCount = 0;
     boolean isCurrentForecastAllowed = true;
 
-    uint8_t doUpdate(OpenWeatherMapForecastData *data, String url);
-    String buildUrl(String appId, String locationParameter);
+    uint8_t doUpdate(OpenWeatherMapForecastData *data, String path);
+    String buildPath(String appId, String locationParameter);
 
   public:
     OpenWeatherMapForecast();
@@ -96,7 +98,7 @@ class OpenWeatherMapForecast: public JsonListener {
     boolean isMetric() { return this->metric; }
     void setLanguage(String language) { this->language = language; }
     String getLanguage() { return this->language; }
-    void setAllowedHours(uint8_t *allowedHours, uint8_t allowedHoursCount) {
+    void setAllowedHours(const uint8_t *allowedHours, uint8_t allowedHoursCount) {
       this->allowedHours = allowedHours;
       this->allowedHoursCount = allowedHoursCount;
     }
